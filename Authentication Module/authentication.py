@@ -6,7 +6,7 @@ def add_account(conn, username: str, pwd: str, firstName: str, lastName: str, ro
     userQuery = f"""INSERT INTO Users (username, firstName, lastName, role, password) VALUES 
     ('{username}', '{firstName}', '{lastName}', {role}, '{pwd}');"""
     exec1 = database.execute_query(conn, userQuery)
-
+    
     return exec1
 
 
@@ -57,3 +57,4 @@ def login(conn, username:str, pwd:str):
         return result[0][0], result[0][4]
     else:
         print("Login failed, username or password not found.")
+        return False
