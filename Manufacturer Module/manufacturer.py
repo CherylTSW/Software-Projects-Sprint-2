@@ -3,22 +3,16 @@ import mysql.connector
 from tkinter import *
 from mysql.connector import Error
 
-# Method to create the SPRINT1 database
-def create_sprint1_db():
+# Method to create the PHPDB database
+def create_manufacturer_PHPDB():
     # Establishing the connection
     conn = mysql.connector.connect(user='root', password='', host='localhost')
 
     # Creating a cursor object using the cursor() method
     cursor = conn.cursor()
 
-    # Doping database SPRINT1 if already exists.
-    cursor.execute("DROP database IF EXISTS SPRINT1")
-
-    # Preparing query to create a database
-    sql = "CREATE database SPRINT1"
-
-    # Creating a database
-    cursor.execute(sql)
+    # Doping PHPDB database if already exists.
+    cursor.execute("CREATE DATABASE IF NOT EXISTS PHPDB")
 
     # Retrieving the list of databases
     print("List of databases: ")
@@ -28,10 +22,10 @@ def create_sprint1_db():
     # Closing the connection
     conn.close()
 
-# Method to connect to the SPRINT1 database
-def connect_sprint1_db():
+# Method to connect to the PHPDB database
+def connect_manufacturer_PHPDB():
     try:
-        connection = mysql.connector.connect(host="localhost", database="SPRINT1", user="root", password="")
+        connection = mysql.connector.connect(host="localhost", database="PHPDB", user="root", password="")
 
         if connection.is_connected():
             db_info = connection.get_server_info()
@@ -39,21 +33,17 @@ def connect_sprint1_db():
             cursor = connection.cursor()
             cursor.execute("select database();")
             record = cursor.fetchone()
-            print("You're connected to database: ", record)      
+            print("You're connected to database: ", record)
+
+        return connection
 
     except Error:
         print("Error while connecting to MySQL", Error)
 
-    finally:
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
-            print("MySQL connection is closed")
-
 # Method to create the Manufacturer table
 def create_manufacturer_table(filename):
     try:
-        connection = mysql.connector.connect(host='localhost', database='SPRINT1', user='root', password='')
+        connection = connect_manufacturer_PHPDB()
 
         file = open(filename, 'r')
         sqlCode = file.read().split(';')
@@ -68,17 +58,11 @@ def create_manufacturer_table(filename):
 
     except mysql.connector.Error as error:
         print("Failed to create table in MySQL: {}".format(error))
-        
-    finally:
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
-            print("MySQL connection is closed")
 
 # Method to add the manufacturer details
 def add_manufacturer(ManufacturerID: int, ManufacturerFirstName: str, ManufacturerLastName: str, ManufacturerItem: str, ManufacturerStreetAddress: str, ManufacturerPhoneNumber: str):
     try:
-        connection = mysql.connector.connect(host='localhost', database='SPRINT1', user='root', password='')
+        connection = connect_manufacturer_PHPDB()
 
         mySql_insert_query = """INSERT INTO MANUFACTURER (ManufacturerID, ManufacturerFirstName, ManufacturerLastName, ManufacturerItem, ManufacturerStreetAddress, ManufacturerPhoneNumber) 
                             VALUES 
@@ -106,15 +90,10 @@ def add_manufacturer(ManufacturerID: int, ManufacturerFirstName: str, Manufactur
         print("Failed to insert record into Manufacturer table {}".format(error))
         return False
 
-    finally:
-        if connection.is_connected():
-            connection.close()
-            print("MySQL connection is closed")
-
 # Method to remove the manufacturer details
 def remove_manufacturer(ManufacturerID: int):
     try:
-        connection = mysql.connector.connect(host='localhost', database='SPRINT1', user='root', password='')
+        connection = connect_manufacturer_PHPDB()
 
         cursor = connection.cursor()
         print("Manufacturer table before deleting a row")
@@ -140,15 +119,11 @@ def remove_manufacturer(ManufacturerID: int):
     except mysql.connector.Error as error:
         print("Failed to delete record from table: {}".format(error))
         return False
-    finally:
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
 
 # Method to get the manufacturer details by ID
 def get_manufacturer_by_id(ManufacturerID: int):
     try:
-        connection = mysql.connector.connect(host='localhost', database='SPRINT1', user='root', password='')
+        connection = connect_manufacturer_PHPDB()
 
         cursor = connection.cursor()
         sql_select_query = """select * from MANUFACTURER where ManufacturerID = """ + str(ManufacturerID)
@@ -161,10 +136,6 @@ def get_manufacturer_by_id(ManufacturerID: int):
     except mysql.connector.Error as error:
         print("Failed to display record from table: {}".format(error))
         return False
-    finally:
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
 
 # Method to display the manufacturer details
 def display_manufacturer(frame: Tk, startX: int, startY: int, manufacturers):
