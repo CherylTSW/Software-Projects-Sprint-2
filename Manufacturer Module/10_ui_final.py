@@ -3,11 +3,6 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter.font import BOLD
 
-# Creating the SPRINT1 database and Manufacturer table
-# manufacturer.create_sprint1_db()
-# manufacturer.connect_sprint1_db()
-# manufacturer.create_manufacturer_table()
-
 # Method when button 'Add Manufacturer' clicked
 def clickedAdd():
     # The left navigation panel
@@ -234,9 +229,8 @@ if(screen_width > 1750):
     x_offset = int((screen_width-240-980)/2 + 200)
 
 # Create database and table
-manufacturer.create_sprint1_db()
-manufacturer.connect_sprint1_db
-manufacturer.create_manufacturer_table("sql/ManufacturerDB.sql")
+manufacturer.create_manufacturer_PHPDB()
+manufacturer.create_manufacturer_table("sql/PHPDB_Manufacturer.sql")
 
 # Testing purpose button
 btnTest = Button(window, text="GO", font=('Arial', 18), command=clickedAdd)
