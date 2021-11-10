@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS Authentication;
-CREATE DATABASE Authentication;
-USE Authentication;
+DROP DATABASE IF EXISTS PHPDB;
+CREATE DATABASE PHPDB;
+USE PHPDB;
 
 CREATE TABLE Users (
 	userID INT(5) AUTO_INCREMENT NOT NULL PRIMARY KEY,
@@ -11,3 +11,5 @@ CREATE TABLE Users (
 	password VARCHAR(30) NOT NULL
 );
 
+INSERT INTO Users (username, firstName, lastName, role, password)
+VALUES ("test", "test", "test", 1, "test")

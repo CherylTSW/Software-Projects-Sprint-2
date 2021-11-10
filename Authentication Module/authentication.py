@@ -9,7 +9,6 @@ def add_account(conn, username: str, pwd: str, firstName: str, lastName: str, ro
     
     return exec1
 
-
 # Function to delete account from database
 def delete_account(conn, userID:int):
     # Delete the entry from users table
@@ -47,14 +46,38 @@ def login(conn, username:str, pwd:str):
 
     status = content[0][0]
 
+    return status == 1
+    """
     if (status == 1):
         # If account is found, login successful, get role and userID
-        getUserInfo = f"""
+        getUserInfo = f
         SELECT * FROM Users WHERE username='{username}' AND password='{pwd}'
-        """
+        
         result = database.read_query(conn, getUserInfo)
         print("Login successfully")
-        return result[0][0], result[0][4]
+        return True
+        # return result[0][0], result[0][4]
     else:
         print("Login failed, username or password not found.")
         return False
+        """
+
+# Function to return a list of userID and username
+def getUserList(conn):
+    findUsersQuery = f"""
+    SELECT userID, username FROM Users
+    """
+
+    result = database.read_query(conn, findUsersQuery)
+
+    return result
+
+# Function to get password
+def getPassword(conn, userID:int):
+    findPwdQuery = f"""
+    SELECT password FROM Users WHERE userID={userID}
+    """
+
+    result = database.read_query(conn, findPwdQuery)
+
+    return result[0][0]
