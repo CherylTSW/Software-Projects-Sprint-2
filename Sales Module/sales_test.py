@@ -27,5 +27,39 @@ class TestInventory(unittest.TestCase):
         # result = False if error occurs while adding sales record
         self.assertTrue(result)
 
+    # Test case to test if get_all_sales() retrieve items from the database successfully
+    def test_get_all_sales(self):
+        # Call the method and print the rows of the table if result != False
+        result = sales.get_all_sales()
+        if(result):
+            for row in result:
+                print(row)
+        
+        # result = False if error occurs while getting the sales
+        self.assertTrue(result)
+
+    # Test case to test if get_sales_by_id() retrieve correct items from the database successfully
+    def test_get_sales_by_id(self):
+        # Call the method and print the record retrieved to see if expected item is retrieved
+        result = sales.get_sales_by_id(1)
+        if(result):
+            for row in result:
+                print(row)
+
+        # result = False if error occurs while getting the inventory
+        self.assertTrue(result)
+
+    # Test case to test if get_sales_by_name() retrieve correct items from the database successfully
+    def test_get_sales_by_name(self):
+        # Call the method and print the record retrieved to see if expected item is retrieved
+        result = sales.get_sales_by_name("Paracetamol 10 Tablets")
+        if(result):
+            for row in result:
+                print(row)
+
+        # result = False if error occurs while getting the inventory
+        self.assertTrue(result)
+
+
 if __name__ == '__main__':
     unittest.main()
