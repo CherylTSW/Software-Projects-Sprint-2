@@ -220,8 +220,8 @@ def changePasswordPage():
             pwdConfirm = confirmPwdEntry.get()
             if (pwd == pwdConfirm):
                 if (auth.password_change(auth_db_conn, loginUserID, pwd)):
-                    messagebox.showinfo('', "Password changed successfully!")
-                    changePasswordPage()
+                    messagebox.showinfo('', "Password changed successfully! You will be logged out now!")
+                    loginPage()
                 else:
                     messagebox.showerror('Error', 'Process failed!')
             else:
