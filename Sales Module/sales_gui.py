@@ -67,6 +67,76 @@ def clickedAdd():
     btnSubmit = Button(inputFrame, text="Submit", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedSubmit, activebackground='#FB5F00', activeforeground=white, padx=30, pady=5)
     btnSubmit.place(x=(screen_width-240)/2, y=800, anchor='center')
 
+# Method when button 'Display Sales' clicked
+def clickedDisplay():
+    # The left navigation panel
+    # Frame
+    leftFrame = Frame(window, bg=blue, width=240, height=screen_height)
+    leftFrame.grid(column=0, row=0, rowspan=10)
+    leftFrame.grid_propagate(0)
+    # Label
+    moduleName = Label(leftFrame, text="Sales\nModule", bg=blue, fg=white, font=('Calibri', 26, BOLD))
+    moduleName.place(x=120, y=80, anchor="center")
+    # Show as line
+    lineLabel = Label(leftFrame, bg=orange)
+    lineLabel.place(x=120, y=160, anchor="center", width=195, height=3)
+    # Button
+    btnAdd = Button(leftFrame, text="Add Sales", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedAdd, activebackground='#FB5F00', activeforeground=white)
+    btnAdd.place(x=120, y=260, anchor="center", width=160, height=100)
+    btnDelete = Button(leftFrame, text="Delete\nSales", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedDelete, activebackground='#FB5F00', activeforeground=white)
+    btnDelete.place(x=120, y=400, anchor="center", width=160, height=100)
+    btnDisplay = Button(leftFrame, text="Display\nSales", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedDisplay, activebackground='#FB5F00', activeforeground=white)
+    btnDisplay.place(x=120, y=540, anchor="center", width=160, height=100)
+
+    # Main function
+    
+    # Method when button 'Submit' clicked
+    def clickedSubmit():
+        if( len(salesIDEntry.get()) != 0 ): 
+            itemID = int(salesIDEntry.get())
+            result = sales.get_sales_by_id(itemID)
+            if(result):
+                sales.display_sales(inputFrame, 150, 500, result)
+            else:
+                messagebox.showerror('Match not found', 'No match can be found')
+            
+        # elif(len(entryItemName.get()) != 0):
+        #     itemName = entryItemName.get()
+        #     result = inventory.get_inventory_by_name(itemName)
+        #     if(result):
+        #         inventory.display_inventory(inputFrame, (screen_width-240-1000)/2, 500, result)
+        #     else:
+        #         messagebox.showerror('Match not found', 'No match can be found')
+        else:
+            messagebox.showerror('Error', 'Please fill in the Item ID or Item Name to be searched')
+
+    # Frame
+    inputFrame = Frame(window, width=screen_width-240, height=screen_height)
+    inputFrame.grid(column=1, row=0, rowspan=10, sticky="ns")
+    # Title of the page
+    labelTitle = Label(inputFrame, text="Display Sales", font=('Arial', 30, BOLD), fg=blue)
+    labelTitle.place(x=(screen_width-240)/2, y=70, anchor='center')
+
+    # Back button
+    btnBack = Button(inputFrame, text="Back", font=('Arial', 14), bg=orange, fg=white, relief='flat', command=clickedBack, activebackground='#FB5F00', activeforeground=white, padx=20, pady=5)
+    btnBack.place(x=50, y=70, anchor='w')
+
+    # Sales ID 
+    salesIDLabel = Label(inputFrame, text="Sales ID :", font=('Arial', 24), fg=blue)
+    salesIDLabel.place(x=x_offset, y=270, anchor="e")
+    salesIDEntry = Entry(inputFrame, font=('Arial', 24), fg=white, bg=blue)
+    salesIDEntry.place(x=x_offset+10, y=270, anchor="w", width=entry_width, height=50)
+
+    # Sales Name
+    # salesNameLabel = Label(inputFrame, text="Item Name :", font=('Arial', 24), fg=blue)
+    # salesNameLabel.place(x=x_offset, y=370, anchor="e")
+    # salesNameEntry = Entry(inputFrame, font=('Arial', 24), fg=white, bg=blue)
+    # salesNameEntry.place(x=x_offset+10, y=370, anchor="w", width=entry_width, height=50)
+
+    # Submit button
+    btnSubmit = Button(inputFrame, text="Search", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedSubmit, activebackground='#FB5F00', activeforeground=white, padx=30, pady=5)
+    btnSubmit.place(x=(screen_width-240)/2, y=800, anchor='center')
+
 # Empty method just to avoid error in the code
 def clickedDelete():
     label = Label()

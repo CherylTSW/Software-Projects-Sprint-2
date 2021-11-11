@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
+from tkinter import *
 
 # Method to connect to database SPRINT1. 
 # Return the connection object if successful, else return False
@@ -117,4 +118,21 @@ def get_sales_by_name(item: str):
         # return False if error occurs
         return False
 
+# Method to display the items retrieved from database in a table form
+def display_sales(window: Tk, startColumn: int, startRow: int, items):
+    # Declaring fields(used as table headings) and fieldsWidth(used to set width of each column)
+    fields = ["ID", "Sales", "Price"]
+    fieldsWidth = [10, 30, 15]
+
+    # Get the number of rows and columns
+    numberOfRow = len(items)
+    numberOfColumn = len(items[0])
+
+    # loop to create the Label()
+    for x in range(numberOfRow):
+        for y in range(numberOfColumn):
+            heading = Label(window, font=('Arial', 12), text=fields[y], width=fieldsWidth[y], borderwidth=2, relief="ridge")
+            heading.grid(column=startColumn+y, row=startRow)
+            data = Label(window, font=('Arial', 12), text=items[x][y], width=fieldsWidth[y], borderwidth=2, relief="ridge")
+            data.grid(column=startColumn+y, row=startRow+x+1)
 
