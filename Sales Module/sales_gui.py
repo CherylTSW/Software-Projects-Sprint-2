@@ -29,18 +29,21 @@ def clickedAdd():
     # Method when button 'Submit' clicked
     def clickedSubmit():
         if(len(entrySalesItem.get()) != 0 and len(entrySalesAmount.get()) != 0):
-            salesItem = entrySalesItem.get()
-            if(entrySalesAmount.get().isdigit()):
-                amount = float(entrySalesAmount.get())
+            if(len(entrySalesItem.get()) < 255 or len(entrySalesAmount.get()) < 20):
+                salesItem = entrySalesItem.get()
+                if(entrySalesAmount.get().isdigit()):
+                    amount = float(entrySalesAmount.get())
 
-                if(sales.add_sales(salesItem, amount)):
-                    entrySalesItem.delete(0, 'end')
-                    entrySalesAmount.delete(0, 'end')
-                    messagebox.showinfo('', 'Sales record added into database successfully !')
+                    if(sales.add_sales(salesItem, amount)):
+                        entrySalesItem.delete(0, 'end')
+                        entrySalesAmount.delete(0, 'end')
+                        messagebox.showinfo('', 'Sales record added into database successfully !')
+                    else:
+                        messagebox.showerror('Error', 'An error occured while trying to add the sales record into database')
                 else:
-                    messagebox.showerror('Error', 'An error occured while trying to add the sales record into database')
+                    messagebox.showerror('Error', 'Please enter a valid number in the "Amount" field')
             else:
-                messagebox.showerror('Error', 'Please enter a valid number in the "Amount" field')
+                messagebox.showerror('Error', 'fields too long')
         else:
             messagebox.showerror('Error', 'Please fill in all the fields')
     
@@ -81,9 +84,9 @@ def clickedDisplay():
     lineLabel = Label(leftFrame, bg=orange)
     lineLabel.place(x=120, y=160, anchor="center", width=195, height=3)
     # Button
-    btnAdd = Button(leftFrame, text="Add Sales", font=('Arial', 18), bg=orange, fg=white, relief='flat', activebackground='#FB5F00', activeforeground=white)
+    btnAdd = Button(leftFrame, text="Add Sales", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedAdd, activebackground='#FB5F00', activeforeground=white)
     btnAdd.place(x=120, y=260, anchor="center", width=160, height=100)
-    btnDelete = Button(leftFrame, text="Delete\nSales", font=('Arial', 18), bg=orange, fg=white, relief='flat', activebackground='#FB5F00', activeforeground=white)
+    btnDelete = Button(leftFrame, text="Delete\nSales", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedDelete, activebackground='#FB5F00', activeforeground=white)
     btnDelete.place(x=120, y=400, anchor="center", width=160, height=100)
     btnDisplay = Button(leftFrame, text="Display\nSales", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedDisplay, activebackground='#FB5F00', activeforeground=white)
     btnDisplay.place(x=120, y=540, anchor="center", width=160, height=100)
@@ -119,7 +122,7 @@ def clickedDisplay():
     labelTitle.place(x=(screen_width-240)/2, y=70, anchor='center')
 
     # Back button
-    btnBack = Button(inputFrame, text="Back", font=('Arial', 14), bg=orange, fg=white, relief='flat', command=tempDashboard, activebackground='#FB5F00', activeforeground=white, padx=20, pady=5)
+    btnBack = Button(inputFrame, text="Back", font=('Arial', 14), bg=orange, fg=white, relief='flat', command=clickedBack, activebackground='#FB5F00', activeforeground=white, padx=20, pady=5)
     btnBack.place(x=50, y=70, anchor='w')
 
     # Sales ID 
