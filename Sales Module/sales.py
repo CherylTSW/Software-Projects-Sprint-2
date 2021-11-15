@@ -12,7 +12,7 @@ def connect_db():
             host = "localhost",
             user = "root",
             password = "",
-            database = "SPRINT1"
+            database = "PHPDB"
         )
         return mydb
     except Error:
@@ -178,4 +178,3 @@ def display_sales(window: Tk, startColumn: int, startRow: int, items, screen_wid
             heading.grid(column=startColumn+y, row=startRow)
             data = Label(tableFrame, font=('Arial', 12), text=items[x][y], width=fieldsWidth[y], borderwidth=2, relief="ridge")
             data.grid(column=startColumn+y, row=startRow+x+1)
-
