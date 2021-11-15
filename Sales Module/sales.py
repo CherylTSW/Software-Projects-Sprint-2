@@ -118,6 +118,45 @@ def get_sales_by_name(item: str):
         # return False if error occurs
         return False
 
+# Method to delete the items retrieved from database in a table form
+def delete_sales(salesID: int):
+    try:
+        connection = connect_db()
+        cursor = connection.cursor()
+        if(get_sales_by_id(salesID)):
+            print("Table before deleting a row")
+            sql_select_query = f"SELECT * FROM sales WHERE salesID = %s"
+            formatString = (salesID,)
+            cursor.execute(sql_select_query, formatString)
+            record = cursor.fetchone()
+            print(record)
+
+            # Delete a record
+            sql_Delete_query = f"DELETE FROM sales WHERE salesID = %s"
+            formatString = (salesID,)
+            cursor.execute(sql_Delete_query, formatString)
+            connection.commit()
+            print('number of rows deleted', cursor.rowcount)
+
+            # Verify using select query (optional)
+            cursor.execute(sql_select_query, formatString)
+            records = cursor.fetchall()
+            if len(records) == 0:
+                print("Sales Record Deleted successfully ")
+                return True
+
+        else:
+            return False
+
+    except mysql.connector.Error as error:
+        print("Failed to delete sales record from table: {}".format(error))
+        return False
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
 # Method to display the items retrieved from database in a table form
 def display_sales(window: Tk, startColumn: int, startRow: int, items):
     # Declaring fields(used as table headings) and fieldsWidth(used to set width of each column)
@@ -135,4 +174,3 @@ def display_sales(window: Tk, startColumn: int, startRow: int, items):
             heading.grid(column=startColumn+y, row=startRow)
             data = Label(window, font=('Arial', 12), text=items[x][y], width=fieldsWidth[y], borderwidth=2, relief="ridge")
             data.grid(column=startColumn+y, row=startRow+x+1)
-
