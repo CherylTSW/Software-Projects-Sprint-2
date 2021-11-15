@@ -224,7 +224,7 @@ x_offset = int((screen_width-240-780)/2 + 200)
 if(screen_width > 1750):
     x_offset = int((screen_width-240-980)/2 + 200)
 # Create table
-sales.execute_sql_file("sql/InventoryDB.sql")
+sales.execute_sql_file("SalesTable.sql")
 # Testing purpose button
 btnTest = Button(window, text="GO", font=('Arial', 18), command=clickedAdd)
 btnTest.grid(column=0, row=0)
