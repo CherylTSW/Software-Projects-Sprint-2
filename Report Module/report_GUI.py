@@ -1,18 +1,9 @@
-import manufacturer
 from tkinter import *
 from tkinter import messagebox
 from tkinter.font import BOLD
-
-
-import manufacturer
-from tkinter import *
-from tkinter import messagebox
-from tkinter.font import BOLD
-
 from report_module import report_toCSV
 
-
-# Method when button 'Display Manufacturer' clicked
+# Method when button 'Generate Report' clicked
 def clickedDisplay():
     # The left navigation panel
     # Frame
