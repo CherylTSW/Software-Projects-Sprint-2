@@ -139,7 +139,56 @@ def clickedDisplay():
 
 # Empty method just to avoid error in the code
 def clickedDelete():
-    label = Label()
+    # The left navigation panel
+    # Frame
+    leftFrame = Frame(window, bg=blue, width=240, height=screen_height)
+    leftFrame.grid(column=0, row=0, rowspan=10)
+    leftFrame.grid_propagate(0)
+    # Label
+    moduleName = Label(leftFrame, text="Sales\nModule", bg=blue, fg=white, font=('Calibri', 26, BOLD))
+    moduleName.place(x=120, y=80, anchor="center")
+    # Show as line
+    lineLabel = Label(leftFrame, bg=orange)
+    lineLabel.place(x=120, y=160, anchor="center", width=195, height=3)
+    # Button
+    btnAdd = Button(leftFrame, text="Add Sales", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedAdd, activebackground='#FB5F00', activeforeground=white)
+    btnAdd.place(x=120, y=260, anchor="center", width=160, height=100)
+    btnDelete = Button(leftFrame, text="Delete\nSales", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedDelete, activebackground='#FB5F00', activeforeground=white)
+    btnDelete.place(x=120, y=400, anchor="center", width=160, height=100)
+    btnDisplay = Button(leftFrame, text="Display\nSales", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedDisplay, activebackground='#FB5F00', activeforeground=white)
+    btnDisplay.place(x=120, y=540, anchor="center", width=160, height=100)
+
+    # Method when button 'Submit' clicked
+    def clickedSubmit():
+        if( len(entryOrderID.get()) != 0 ):
+            salesID = int(entryOrderID.get())
+            if(sales.delete_sales(salesID)):
+                entryOrderID.delete(0, 'end')
+                messagebox.showinfo('', 'Sales record deleted from database successfully !')
+            else:
+                messagebox.showerror('Error', 'An error occured while trying to delete the sales record')
+        else:
+            messagebox.showerror('Error', 'Please fill in the Sales ID to be deleted')
+        
+    # Main function 
+    # Frame
+    inputFrame = Frame(window, width=screen_width-240, height=screen_height)
+    inputFrame.grid(column=1, row=0, rowspan=10, sticky="ns")
+    # Title of the page
+    labelTitle = Label(inputFrame, text="Delete Sales", font=('Arial', 30, BOLD), fg=blue)
+    labelTitle.place(x=(screen_width-240)/2, y=70, anchor='center')
+    # Back button
+    btnBack = Button(inputFrame, text="Back", font=('Arial', 14), bg=orange, fg=white, relief='flat', command=clickedBack, activebackground='#FB5F00', activeforeground=white, padx=20, pady=5)
+    btnBack.place(x=50, y=70, anchor='w')
+    # Label
+    labelOrderId = Label(inputFrame, text="Sales ID :", font=('Arial', 24), fg=blue)
+    labelOrderId.place(x=x_offset, y=270, anchor="e")
+    # Entry
+    entryOrderID = Entry(inputFrame, font=('Arial', 24), fg=white, bg=blue)
+    entryOrderID.place(x=x_offset+10, y=270, anchor="w", width=entry_width, height=50)
+    # Submit button
+    btnSubmit = Button(inputFrame, text="Submit", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedSubmit, activebackground='#FB5F00', activeforeground=white, padx=30, pady=5)
+    btnSubmit.place(x=(screen_width-240)/2, y=800, anchor='center')
 
 # Empty method just to avoid error in the code
 def clickedDisplay():
