@@ -27,6 +27,13 @@ class TestInventory(unittest.TestCase):
         # result = False if error occurs while adding sales record
         self.assertTrue(result)
 
+    # Test case to test if add_sales() INSERT sales record into the table successfully
+    def test_delete_sales(self):
+        result = sales.delete_sales(1)
+
+        # result = False if error occurs while adding sales record
+        self.assertTrue(result)
+
     # Test case to test if get_all_sales() retrieve items from the database successfully
     def test_get_all_sales(self):
         # Call the method and print the rows of the table if result != False
