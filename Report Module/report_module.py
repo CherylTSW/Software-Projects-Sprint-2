@@ -1,14 +1,14 @@
-import manufacturer
+import sales
 import mysql.connector
 import pandas as pd
 
-# Method to get the manufacturer details by ID
+# Method to convert the sales report from the sql to CSV file format to be downloaded
 def report_toCSV():
     try:
-        connection = manufacturer.connect_manufacturer_PHPDB()
+        connection = sales.connect_db()
 
         cursor = connection.cursor()
-        sql_select_query = """select * from MANUFACTURER"""
+        sql_select_query = """select * from Sales"""
 
         # Testing
         cursor.execute(sql_select_query)
@@ -29,6 +29,3 @@ def report_toCSV():
     except mysql.connector.Error as error:
         print("Unable to convert report to CSV: {}".format(error))
         return False
-
-# Runs the Report Module
-report_toCSV()
