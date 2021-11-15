@@ -81,9 +81,9 @@ def clickedDisplay():
     lineLabel = Label(leftFrame, bg=orange)
     lineLabel.place(x=120, y=160, anchor="center", width=195, height=3)
     # Button
-    btnAdd = Button(leftFrame, text="Add Sales", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedAdd, activebackground='#FB5F00', activeforeground=white)
+    btnAdd = Button(leftFrame, text="Add Sales", font=('Arial', 18), bg=orange, fg=white, relief='flat', activebackground='#FB5F00', activeforeground=white)
     btnAdd.place(x=120, y=260, anchor="center", width=160, height=100)
-    btnDelete = Button(leftFrame, text="Delete\nSales", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedDelete, activebackground='#FB5F00', activeforeground=white)
+    btnDelete = Button(leftFrame, text="Delete\nSales", font=('Arial', 18), bg=orange, fg=white, relief='flat', activebackground='#FB5F00', activeforeground=white)
     btnDelete.place(x=120, y=400, anchor="center", width=160, height=100)
     btnDisplay = Button(leftFrame, text="Display\nSales", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedDisplay, activebackground='#FB5F00', activeforeground=white)
     btnDisplay.place(x=120, y=540, anchor="center", width=160, height=100)
@@ -96,7 +96,8 @@ def clickedDisplay():
             itemID = int(salesIDEntry.get())
             result = sales.get_sales_by_id(itemID)
             if(result):
-                sales.display_sales(inputFrame, 150, 500, result)
+                sales.display_sales(inputFrame, 150, 500, result, screen_width, screen_height)
+                #150 500
             else:
                 messagebox.showerror('Match not found', 'No match can be found')
             
@@ -118,7 +119,7 @@ def clickedDisplay():
     labelTitle.place(x=(screen_width-240)/2, y=70, anchor='center')
 
     # Back button
-    btnBack = Button(inputFrame, text="Back", font=('Arial', 14), bg=orange, fg=white, relief='flat', command=clickedBack, activebackground='#FB5F00', activeforeground=white, padx=20, pady=5)
+    btnBack = Button(inputFrame, text="Back", font=('Arial', 14), bg=orange, fg=white, relief='flat', command=tempDashboard, activebackground='#FB5F00', activeforeground=white, padx=20, pady=5)
     btnBack.place(x=50, y=70, anchor='w')
 
     # Sales ID 
@@ -190,9 +191,6 @@ def clickedDelete():
     btnSubmit = Button(inputFrame, text="Submit", font=('Arial', 18), bg=orange, fg=white, relief='flat', command=clickedSubmit, activebackground='#FB5F00', activeforeground=white, padx=30, pady=5)
     btnSubmit.place(x=(screen_width-240)/2, y=800, anchor='center')
 
-# Empty method just to avoid error in the code
-def clickedDisplay():
-    label = Label()
 
 # Method when button 'Back' clicked
 def clickedBack():
