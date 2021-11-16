@@ -1,0 +1,27 @@
+# Add this two functions to database.py
+# At main.py call database.execute_sql_file(filename)
+
+def create_server_connection(host_name, user_name, user_password):
+    connection = None
+    try:
+        connection = mysql.connector.connect(
+            host=host_name,
+            user=user_name,
+            passwd=user_password
+        )
+        print("MySQL Database connection successful")
+    except Error as err:
+        print(f"Error: '{err}'")
+
+    return connection
+
+# Method to execute SQL code from file
+def execute_sql_file(filename):
+    conn = create_server_connection("localhost", "root", "")
+    # Open file to read, then split the content with ';' as delimiter to form mSQL code that can be executed
+    file = open(filename, 'r')
+    sqlCode = file.read().split(';')
+    file.close()
+
+    for code in sqlCode:
+        execute_query(conn, code)
